@@ -1,71 +1,88 @@
 function configureListeners() {
-    let images = // select img elements  
+    let images = document.querySelectorAll('img');
 
-
-     for (var i = 0; i < images.length; i++) {        
-        // iterate over images and add mouseover event listeners      
-    } 
+    for (var i = 0; i < images.length; i++) {
+        images[i].addEventListener('mouseover', handleMouseOver);
+        images[i].addEventListener('mouseout', handleMouseOut);
+    }
 }
 
-function addOpacity(event) {
-    // add appropriate CSS class
-    getProductInfo(event.target.id);     
+function handleMouseOver(event) {
+    event.target.classList.add('reduce-opacity');
+    const paintColor = event.target.getAttribute('id');
+
+    const { price, colorName } = getProductInfo(paintColor);
+    updatePrice(colorName, price);
 }
 
-function removeOpacity(event) {
-     //remove appropriate CSS class
-
-    let element = document.getElementById('color-price');
-        element.textContent = '';
-        
-    let color = document.getElementById('color-name');
-        color.textContent = ''; 
-
-    event.preventDefault();    
+function handleMouseOut(event) {
+    event.target.classList.remove('reduce-opacity');
+    resetProductInfo();
 }
 
 function getProductInfo(paintColor) {
     let price;
-    let colorName;  
-    
+    let colorName;
+
     switch (paintColor) {
-        case 'pn1':           
-            // set variables for price and color name and invoke a function to update the price     
-            break;           
+        case 'pn1':
+            price = 14.99;
+            colorName = 'Lime Green';
+            break;
         case 'pn2':
-            // set variables for price and color name and invoke a function to update the price    
-            break;            
+            price = 11.14;
+            colorName = 'Medium Brown';
+            break;
         case 'pn3':
-            // set variables for price and color name and invoke a function to update the price  
-            break;   
+            price = 22.99;
+            colorName = 'Royal Blue';
+            break;
         case 'pn4':
-            // set variables for price and color name and invoke a function to update the price  
-            break;   
+            price = 13.42;
+            colorName = 'Solid Red';
+            break;
         case 'pn5':
-            // set variables for price and color name and invoke a function to update the price       
-            break;   
+            price = 21.98;
+            colorName = 'Solid White';
+            break;
         case 'pn6':
-            // set variables for price and color name and invoke a function to update the price        
-            break;   
+            price = 4.99;
+            colorName = 'Solid Black';
+            break;
         case 'pn7':
-            // set variables for price and color name and invoke a function to update the price 
-            break;   
+            price = 8.22;
+            colorName = 'Solid Cyan';
+            break;
         case 'pn8':
-            // set variables for price and color name and invoke a function to update the price   
-            break;   
+            price = 11.99;
+            colorName = 'Solid Purple';
+            break;
         case 'pn9':
-            // set variables for price and color name and invoke a function to update the price 
-            break;   
-          default:              
+            price = 14.99;
+            colorName = 'Solid Yellow';
+            break;
+        default:
+            price = 0.00;
+            colorName = 'Not Found';
     }
 
-    function updatePrice(colorName, price)
-    {       
-        let colorPrice = // select element with corresponding id
-        // display price
-        
-        let color = // select element with corresponding id
-        //display color name
-    }
-    
+    return { price, colorName };
 }
+
+function resetProductInfo() {
+    let colorPrice = document.getElementById('color-price');
+    colorPrice.textContent = '';
+
+    let color = document.getElementById('color-name');
+    color.textContent = '';
+}
+
+function updatePrice(colorName, price) {
+    let colorPrice = document.getElementById('color-price');
+    colorPrice.textContent = 'Price per Gallon: $' + price.toFixed(2);
+
+    let color = document.getElementById('color-name');
+    color.textContent = 'Color: ' + colorName;
+}
+
+configureListeners();
